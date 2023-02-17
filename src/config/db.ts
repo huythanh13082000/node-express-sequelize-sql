@@ -1,4 +1,16 @@
-// const sequelize = new Sequelize('database', 'username', 'password', {
-//   host: 'localhost',
-//   dialect: /* one of 'mysql' | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
-// });
+import {Sequelize} from 'sequelize'
+import dotenv from 'dotenv'
+dotenv.config()
+
+export const connectDB = async () => {
+  console.log(process.env.APP_HOST)
+  const sequelize = new Sequelize('db_test', 'root', '', {
+    host: process.env.APP_HOST,
+    dialect: 'mysql',
+  })
+  try {
+    await sequelize.authenticate()
+  } catch (error: any) {
+    throw new Error(error)
+  }
+}
